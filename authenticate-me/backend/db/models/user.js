@@ -1,6 +1,13 @@
 'use strict';
 const { Model, Sequelize} = require('sequelize');
 const bcrypt = require('bcryptjs');
+const crypto = require("crypto");
+
+// Set a fallback if WebCryptoAPI is not available
+bcrypt.setRandomFallback((len) => {
+  return crypto.randomBytes(len).toString("base64");
+});
+
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
